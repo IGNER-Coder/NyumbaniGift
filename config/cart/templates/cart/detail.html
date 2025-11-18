@@ -1,0 +1,65 @@
+ {% extends 'store/base.html' %} {% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart | NyumbaniGift</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-light">
+
+
+
+    <div class="container mt-5">
+        <h1 class="mb-4 playfair">Your Shopping Cart</h1>
+        
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>KES {{ item.price }}</td>
+                            <td>KES {{ item.total_price }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4">
+                                Your cart is empty. <a href="{% url 'index' %}">Go shopping!</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end fw-bold">Total:</td>
+                            <td class="fw-bold">KES {{ cart.get_total_price }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'index' %}" class="btn btn-outline-dark">Continue Shopping</a>
+                    <a href="{% url 'orders:order_create' %}" class="btn btn-success">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+{% endblock %}
